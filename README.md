@@ -1,4 +1,5 @@
-# BeamMP-Docker-Container
+# BeamMP Docker Container
+
 This repository contains a Docker setup for running a **BeamMP server** on Linux with persistent configuration, mods, and logs.
 
 ---
@@ -34,26 +35,32 @@ chmod +x BeamMP-Server.debian.12.x86_64
 Step 3: Create Config Directory and Copy Config
 mkdir -p ~/Containers/BeamMP/config
 cp ServerConfig.toml ~/Containers/BeamMP/config/
+```
 Make sure to edit ServerConfig.toml and add your AuthKey.
 
 Step 4: Dockerfile
 FROM debian:12-slim
-
+```
 # Install dependencies
 RUN apt-get update && apt-get install -y liblua5.3-0 && rm -rf /var/lib/apt/lists/*
-
+```
+```
 # Set working directory
 WORKDIR /beammp
-
+```
+```
 # Copy server binary
 COPY BeamMP-Server.debian.12.x86_64 ./BeamMP-Server
-
+```
+```
 # Copy config folder
 COPY config ./config
-
+```
+```
 # Make binary executable
 RUN chmod +x BeamMP-Server
-
+```
+```
 # Start server
 CMD ["./BeamMP-Server"]
 Step 5: Build Docker Image
@@ -66,4 +73,6 @@ docker run -d \
   -p 51000:51000/udp \
   -v ~/Containers/BeamMP/config:/beammp/config \
   -v ~/Containers/BeamMP/mods:/beammp/mods \
-  -v ~/Containers/BeamMP/logs:/beammp/log
+  -v ~/Containers/BeamMP/logs:/beammp/logs \
+  beammp-server
+```
