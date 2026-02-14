@@ -29,10 +29,14 @@ Persistent data is stored in:
 ```bash
 git clone https://github.com/BeamMP/BeamMP-Server.git ~/BeamMP-Server
 cd ~/BeamMP-Server
+```
 Step 2: Download Server Binary
+```
 wget https://github.com/BeamMP/BeamMP-Server/releases/download/v3.9.0/BeamMP-Server.debian.12.x86_64
 chmod +x BeamMP-Server.debian.12.x86_64
+```
 Step 3: Create Config Directory and Copy Config
+```
 mkdir -p ~/Containers/BeamMP/config
 cp ServerConfig.toml ~/Containers/BeamMP/config/
 ```
