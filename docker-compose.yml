@@ -1,0 +1,12 @@
+services:
+  beammp-server:
+    image: beammp-server
+    container_name: beammp-server
+    restart: unless-stopped
+    ports:
+      - "30814:30814/tcp"
+      - "30814:30814/udp"
+    volumes:
+      - ~/Containers/BeamMP/config:/beammp/config
+      - ~/Containers/BeamMP/mods:/beammp/mods
+      - ~/Containers/BeamMP/logs:/beammp/logs
