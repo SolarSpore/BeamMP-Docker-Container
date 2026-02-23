@@ -1,15 +1,16 @@
 # BeamMP Docker Container
 
-A simple Docker setup for running a self-hosted [BeamMP](https://beammp.com/) multiplayer server on Linux with persistent config, mods, and logs. Tested on Ubuntu, Pop!_OS, and Debian.
+A simple Docker setup for running a self-hosted [BeamMP](https://beammp.com/) multiplayer server on Linux (or Windows via WSL2) with persistent config, mods, and logs. Tested on Ubuntu, Pop!_OS, and Debian.
 
 ---
 
 ## Prerequisites
 
 - Docker installed on your system
-- A Linux machine (Ubuntu, Pop!_OS, Debian, etc.)
 - A BeamMP Auth Key — grab one from the [BeamMP Keymaster](https://keymaster.beammp.com/)
 - `git` (optional, for cloning)
+
+**Windows users:** See the [Windows Setup](#windows-setup-wsl2) section below before continuing.
 
 ---
 
@@ -25,6 +26,32 @@ Persistent data lives on your host machine at:
 ```
 
 Volumes are mounted into the container at runtime, so your config and mods survive container rebuilds.
+
+---
+
+## Windows Setup (WSL2)
+
+If you're on Windows, the easiest path is running this through Docker Desktop with WSL2. This lets you use the same Linux commands as everyone else.
+
+### 1. Install WSL2
+
+Open PowerShell as Administrator and run:
+
+```powershell
+wsl --install
+```
+
+Restart your machine when prompted. This installs WSL2 with Ubuntu by default.
+
+### 2. Install Docker Desktop
+
+Download and install [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/). During setup, make sure **"Use WSL2 instead of Hyper-V"** is selected.
+
+Once installed, open Docker Desktop → Settings → Resources → WSL Integration, and enable it for your Ubuntu distro.
+
+### 3. Open your WSL terminal
+
+Launch Ubuntu from the Start menu (or run `wsl` in PowerShell). From here, all the steps below are identical to Linux — just follow along normally.
 
 ---
 
@@ -89,7 +116,40 @@ CMD ["./BeamMP-Server"]
 docker build -t beammp-server .
 ```
 
-### Run the container
+### Option A — Docker Compose (recommended)
+
+Create a `docker-compose.yml` in your project folder:
+
+```yaml
+services:
+  beammp-server:
+    image: beammp-server
+    container_name: beammp-server
+    restart: unless-stopped
+    ports:
+      - "50000:50000/tcp"
+      - "51000:51000/udp"
+    volumes:
+      - ~/Containers/BeamMP/config:/beammp/config
+      - ~/Containers/BeamMP/mods:/beammp/mods
+      - ~/Containers/BeamMP/logs:/beammp/logs
+```
+
+Then start it with:
+
+```bash
+docker compose up -d
+```
+
+To stop it:
+
+```bash
+docker compose down
+```
+
+### Option B — Docker Run
+
+If you'd rather skip the compose file, you can run it directly:
 
 ```bash
 docker run -d \
@@ -105,8 +165,6 @@ docker run -d \
 
 The server will start in the background and restart automatically if it crashes or if Docker restarts.
 
-```
-
 ---
 
 ## Notes & Troubleshooting
@@ -115,3 +173,4 @@ The server will start in the background and restart automatically if it crashes 
 - Mods placed in `~/Containers/BeamMP/mods/` will be served to connecting clients automatically.
 - Server logs are written to `~/Containers/BeamMP/logs/` and persist between restarts.
 - To update the server binary in the future, just download the new release, rebuild the image, and restart the container.
+- **Windows users:** Make sure Docker Desktop is running before using any `docker` commands in WSL.
