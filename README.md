@@ -7,7 +7,7 @@ A simple Docker setup for running a self-hosted [BeamMP](https://beammp.com/) mu
 ## Prerequisites
 
 - Docker installed on your system
-- A BeamMP Auth Key — grab one from the [BeamMP Keymaster](https://keymaster.beammp.com/)
+- A BeamMP Auth Key - grab one from the [BeamMP Keymaster](https://keymaster.beammp.com/)
 - `git` (optional, for cloning)
 
 **Windows users:** See the [Windows Setup](#windows-setup-wsl2) section below before continuing.
@@ -51,7 +51,7 @@ Once installed, open Docker Desktop → Settings → Resources → WSL Integrati
 
 ### 3. Open your WSL terminal
 
-Launch Ubuntu from the Start menu (or run `wsl` in PowerShell). From here, all the steps below are identical to Linux — just follow along normally.
+Launch Ubuntu from the Start menu (or run `wsl` in PowerShell). From here, all the steps below are identical to Linux - just follow along normally.
 
 ---
 
