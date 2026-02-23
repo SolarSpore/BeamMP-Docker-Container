@@ -1,0 +1,10 @@
+# Secrets
+.env
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor config
+.vscode/
+.idea/
