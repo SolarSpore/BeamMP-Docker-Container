@@ -17,7 +17,7 @@ COPY config ./config
 RUN chmod +x BeamMP-Server
 
 # Expose server ports
-EXPOSE 50000/tcp 51000/udp
+EXPOSE 30814/tcp 30814/udp
 
 # Set volumes for persistence
 VOLUME ["/beammp/config", "/beammp/mods", "/beammp/logs"]
